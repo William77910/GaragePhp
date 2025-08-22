@@ -1,7 +1,7 @@
 <?php
 
 
-//Attention, il manque le dossier composer.look car composer install (dans le terminal) ne fonctionne pas à cause de openssl
+//Attention, le dossier composer.look est à installer dans le terminal (en faisant "composer install")
 
 namespace App\Config;
 
