@@ -1,21 +1,26 @@
 <?php
+
 namespace App\Controllers;
+
 use App\Security\Validator;
 use App\Utils\Response;
 
 
-abstract class BaseController{
+abstract class BaseController
+{
 
   protected Response $responde;
   protected Validator $validator;
 
-  public function __construct(){
+  public function __construct()
+  {
     $this->response = new Response();
     $this->validator = new Validator();
   }
-  protected function render(string $view, array $data=[]):void{
-    $viewPath = __DIR__ . '/views/' .$view .'.php';
-    if(!file_exists($viewPath)){
+  protected function render(string $view, array $data = []): void
+  {
+    $viewPath = __DIR__ . '/views/' . $view . '.php';
+    if (!file_exists($viewPath)) {
       $this->response->error("Vue non trouvée : $viewPath", 500);
       return;
     }
@@ -23,17 +28,19 @@ abstract class BaseController{
     ob_start();
     include $viewPath;
     $content = ob_get_clean();
-    include __DIR__.'/views/layout.php';
+    include __DIR__ . '/views/layout.php';
   }
 
-  protected function getPostData():array{
+  protected function getPostData(): array
+  {
 
     return $this->Validator->sanitize($_POST);
   }
 
-  protected function requireAuth():void{
+  protected function requireAuth(): void
+  {
 
-    if(!isset($_SESSION['use_id'])){
+    if (!isset($_SESSION['use_id'])) {
       $this->response->redirect('/login');
     }
   }
